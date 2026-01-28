@@ -8,44 +8,130 @@
 </head>
 <body class="no-page">
 
-  <!-- Glitter layer -->
+  <audio id="bgm" src="assets/soft.mp3" loop></audio>
+
   <div class="glitter"></div>
 
-  <!-- Heart border box -->
   <span class="hearts top">❤️</span>
   <span class="hearts bottom">❤️</span>
 
-    <main class="no-layout">
-      <!-- Left floating note -->
-      <section class="note-panel">
-        <div class="note-box">
-          <h2>Might sound cheesy and cringe but with you it starts feeling like....</h2>
-          <p>
-            Yun kabhi, yun kabhi
-            Dil kahe jaise haan yehi bas yehi,
-            Samaa hai jisme zindagi zindagi
-            Hai jeeni aise ek pal, ek pal ho baaqi
-            Jaise ajnabi jahaan aake lag jaaye gale,
-            Jaise tu chale aur duniya tere sang chale,
-            Jaise raat chupke se tere kaanon mein kahe
-            Ki ab toh jaane kyun, jaane kyun, jaane kyun...
-          </p>
-        </div>
-      
-        <div class="buttons">
-            <a href="o.html" class="btn yes">One last thing</a>
-        </div>
-      </section>
+  <main class="no-layout">
 
-      <!-- Right image -->
-      <section class="photo-panel">
-        <img src="assets/IMG_1285.jpeg" alt="Us">
-        <div class="float-text">
-            "Jamnapaari Janakpuri Gang Ka AATAAAAANKKKKKKK"
-          </div>
-      </section>
-    </main>
-  </div>
+    <section class="note-panel">
+      <div class="note-box">
+        <h2>Might sound cheesy and cringe but with you it starts feeling like…</h2>
+        <p id="typeText"></p>
+      </div>
+
+      <div class="buttons">
+        <a href="o.html" id="nextBtn" class="btn yes">One last thing</a>
+      </div>
+    </section>
+
+    <section class="photo-panel">
+      <img id="mainImg" src="assets/IMG_1285.jpeg" alt="Us">
+      <div class="float-text">
+        "POV : JUST WHEN YOU THINK YOU'RE SAFE REMEMBER WE'RE WATCHING YOU"
+      </div>
+    </section>
+
+  </main>
+
+<script>
+const audio = document.getElementById("bgm");
+audio.volume = 0;
+document.body.addEventListener("click", () => audio.play(), { once: true });
+
+let vol = 0;
+const fadeIn = setInterval(() => {
+  vol += 0.02;
+  audio.volume = Math.min(vol, 0.5);
+  if (vol >= 0.5) clearInterval(fadeIn);
+}, 200);
+
+const lines = [
+  "Yun kabhi, yun kabhi",
+  " ",
+  "Dil kahe jaise haan yehi bas yehi,", " ",
+  "Samaa hai jisme zindagi zindagi",
+  "Hai jeeni aise ek pal, ek pal ho baaqi",
+  " ",
+  "Jaise ajnabi jahaan aake lag jaaye gale,",
+  " ",
+  "Jaise tu chale aur duniya tere sang chale",
+  " ",
+  "Jaise raat chupke se tere kaanon mein kahe",
+  " ",
+  "Ki ab toh jaane kyun, jaane kyun, jaane kyun.."
+];
+
+const output = document.getElementById("typeText");
+const btn = document.getElementById("nextBtn");
+
+btn.classList.add("locked");
+
+let lineIndex = 0;
+let charIndex = 0;
+const speed = 40;
+const pause = 800;
+
+function type() {
+  if (lineIndex >= lines.length) {
+    btn.classList.remove("locked");
+    return;
+  }
+
+  if (charIndex < lines[lineIndex].length) {
+    output.textContent += lines[lineIndex][charIndex];
+    charIndex++;
+    setTimeout(type, speed);
+  } else {
+    output.textContent += "\n";
+    charIndex = 0;
+    lineIndex++;
+    setTimeout(type, pause);
+  }
+}
+
+type();
+
+const note = document.querySelector(".note-panel");
+document.addEventListener("mousemove", e => {
+  const rect = note.getBoundingClientRect();
+  const x = e.clientX - (rect.left + rect.width / 2);
+  const y = e.clientY - (rect.top + rect.height / 2);
+  note.style.transform = `translate(${x * 0.015}px, ${y * 0.015}px)`;
+});
+
+const img = document.getElementById("mainImg");
+const original = img.src;
+const hidden = "assets/hidden.jpg";
+
+img.addEventListener("mouseenter", () => img.src = hidden);
+img.addEventListener("mouseleave", () => img.src = original);
+
+const thoughts = [
+  "I almost didn’t send this",
+  "You mean a lot to me",
+  "It's different with you",
+];
+
+setInterval(() => {
+  const t = document.createElement("span");
+  t.className = "thought";
+  t.textContent = thoughts[Math.floor(Math.random() * thoughts.length)];
+  t.style.left = Math.random() * 80 + "vw";
+  t.style.top = Math.random() * 80 + "vh";
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 5000);
+}, 3500);
+
+let pulse = 1.5;
+setInterval(() => {
+  pulse += 0.2;
+  document.documentElement.style.setProperty("--pulse-speed", `${pulse}s`);
+}, 6000);
+</script>
 
 </body>
 </html>
