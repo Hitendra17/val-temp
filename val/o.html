@@ -1,151 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Valentine</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Valentine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body class="val-page">
 
-  <!-- Glitter background -->
   <div class="glitter"></div>
 
-  <!-- Heart borders -->
   <span class="hearts top">❤️</span>
   <span class="hearts bottom">❤️</span>
 
-  <!-- Main card -->
   <div class="val-card">
-    <h1 class="val-title">Will you be my Valentine?</h1>
+    <h1 class="val-title">Will you be my Valentine? :) </h1>
 
     <div class="val-layout">
-      <!-- Button arena -->
       <div id="arena">
-        <button id="yesBtn" class="btn yes">
-          PLACEMENT PAKKI SAMJHO, FOR ONBOARDING CLICK HERE
-        </button>
-
-        <button id="noBtn" class="btn no">
-          JAA NA LODU TUJHSE KAUN KARE
-        </button>
+        <button id="yesBtn" class="btn yes">UH OH "GUESS YOU'RE STUCK WITH ME MY BHONDU HEHE"</button>
+        <button id="noBtn" class="btn no">JAA NA LODU TUJH JAISE SE KAUN KARE</button>
       </div>
 
-      <!-- Cat panel -->
       <div class="val-cat-zone">
         <img src="assets/catgif.gif" alt="Cat">
       </div>
     </div>
   </div>
 
-  <!-- Image popup -->
   <div id="imgOverlay" class="img-overlay">
     <div class="img-card">
-      <img src="assets/h.jpg" alt="For you">
+      <img src="assets/ICE.jpeg" alt="For you">
       <button id="closeImg" class="btn no">Close</button>
     </div>
   </div>
 
-  <!-- Script -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-    
-      const noBtn = document.getElementById("noBtn");
-      const yesBtn = document.getElementById("yesBtn");
-      const arena = document.getElementById("arena");
-      const catZone = document.querySelector(".val-cat-zone");
-    
-      const overlay = document.getElementById("imgOverlay");
-      const closeBtn = document.getElementById("closeImg");
-    
-      let activated = false;
-      let lastMove = 0;
-    
-      const COOLDOWN = 300;      // milliseconds between jumps (higher = slower)
-      const TRIGGER_RADIUS = 90; // pixels from cursor (lower = calmer)
-    
-      function overlap(a, b) {
-        return !(
-          a.right < b.left ||
-          a.left > b.right ||
-          a.bottom < b.top ||
-          a.top > b.bottom
-        );
-      }
-    
-      function moveNo() {
-        if (!activated) {
-          activated = true;
-          noBtn.style.position = "absolute";
-        }
-    
-        const padding = 10;
-        const arenaRect = arena.getBoundingClientRect();
-        const yesRect = yesBtn.getBoundingClientRect();
-        const catRect = catZone.getBoundingClientRect();
-    
-        const maxX = arena.clientWidth - noBtn.offsetWidth - padding;
-        const maxY = arena.clientHeight - noBtn.offsetHeight - padding;
-    
-        let x, y, testRect;
-        let tries = 0;
-    
-        do {
-          x = Math.random() * maxX;
-          y = Math.random() * maxY;
-    
-          testRect = {
-            left: arenaRect.left + x,
-            right: arenaRect.left + x + noBtn.offsetWidth,
-            top: arenaRect.top + y,
-            bottom: arenaRect.top + y + noBtn.offsetHeight
-          };
-    
-          tries++;
-          if (tries > 50) break;
-    
-        } while (
-          overlap(testRect, yesRect) ||
-          overlap(testRect, catRect)
-        );
-    
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
-      }
-    
-      // NO button evasion (hover or click)
-      noBtn.addEventListener("mouseenter", moveNo);
-      noBtn.addEventListener("click", moveNo);
-    
-      // Slower proximity-based movement
-      document.addEventListener("mousemove", (e) => {
-        const now = Date.now();
-        if (now - lastMove < COOLDOWN) return;
-    
-        const rect = noBtn.getBoundingClientRect();
-        const dx = e.clientX - (rect.left + rect.width / 2);
-        const dy = e.clientY - (rect.top + rect.height / 2);
-        const distance = Math.sqrt(dx * dx + dy * dy);
-    
-        if (distance < TRIGGER_RADIUS) {
-          lastMove = now;
-          moveNo();
-        }
-      });
-    
-      // YES opens image popup
-      yesBtn.addEventListener("click", () => {
-        overlay.style.display = "flex";
-      });
-    
-      // Close popup
-      closeBtn.addEventListener("click", () => {
-        overlay.style.display = "none";
-      });
-    
-    });
-    </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+  const arena = document.getElementById("arena");
+  const catZone = document.querySelector(".val-cat-zone");
+  const overlay = document.getElementById("imgOverlay");
+  const closeBtn = document.getElementById("closeImg");
+
+  let activated = false;
+
+  function overlap(a, b) {
+    return !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
+  }
+
+  function moveNo() {
+    if (!activated) {
+      activated = true;
+      noBtn.style.position = "absolute";
+    }
+
+    const padding = 10;
+    const arenaRect = arena.getBoundingClientRect();
+    const yesRect = yesBtn.getBoundingClientRect();
+    const catRect = catZone.getBoundingClientRect();
+
+    const maxX = arena.clientWidth - noBtn.offsetWidth - padding;
+    const maxY = arena.clientHeight - noBtn.offsetHeight - padding;
+
+    let x, y, testRect;
+
+    do {
+      x = Math.random() * maxX;
+      y = Math.random() * maxY;
+
+      testRect = {
+        left: arenaRect.left + x,
+        right: arenaRect.left + x + noBtn.offsetWidth,
+        top: arenaRect.top + y,
+        bottom: arenaRect.top + y + noBtn.offsetHeight
+      };
+
+    } while (overlap(testRect, yesRect) || overlap(testRect, catRect));
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  }
+
+  noBtn.addEventListener("mouseenter", moveNo);
+  noBtn.addEventListener("click", moveNo);
+
+  yesBtn.addEventListener("click", () => {
+    overlay.style.display = "flex";
+  });
+
+  closeBtn.addEventListener("click", () => {
+    overlay.style.display = "none";
+  });
+});
+</script>
+
 <a href="index.html" class="home-btn">Home</a>
+
 </body>
 </html>
