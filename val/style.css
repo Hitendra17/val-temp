@@ -391,3 +391,74 @@ body {
   opacity: 0.4;
   filter: grayscale(1);
 }
+
+/* ---------------- MOBILE FIX ---------------- */
+@media (max-width: 768px) {
+
+  .no-layout {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    gap: 2rem;
+    height: 100%;
+  }
+
+  .note-panel {
+    max-width: 100%;
+    width: 100%;
+    padding: 1.5rem;
+  }
+
+  .photo-panel img {
+    width: 90vw;
+    height: auto;
+    max-height: 50vh;
+  }
+
+  .float-text {
+    max-width: 90vw;
+    font-size: 0.9rem;
+  }
+
+  .card,
+  .popup-card,
+  .val-card {
+    width: 90vw;
+    padding: 2rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .popup-title,
+  .val-title {
+    font-size: 1.8rem;
+  }
+
+  .runner {
+    width: 160px;
+    opacity: 0.6;
+  }
+
+  #arena {
+    width: 90vw;
+    height: 240px;
+  }
+
+  .val-layout {
+    flex-direction: column;
+  }
+
+  .val-cat-zone {
+    width: 140px;
+    height: 140px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+}
