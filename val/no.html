@@ -110,21 +110,7 @@ const hidden = "assets/hidden.jpg";
 img.addEventListener("mouseenter", () => img.src = hidden);
 img.addEventListener("mouseleave", () => img.src = original);
 
-const thoughts = [
-  "I almost didn’t send this",
-  "You mean a lot to me",
-  "It's different with you",
-];
 
-setInterval(() => {
-  const t = document.createElement("span");
-  t.className = "thought";
-  t.textContent = thoughts[Math.floor(Math.random() * thoughts.length)];
-  t.style.left = Math.random() * 80 + "vw";
-  t.style.top = Math.random() * 80 + "vh";
-  document.body.appendChild(t);
-  setTimeout(() => t.remove(), 5000);
-}, 3500);
 
 let pulse = 1.5;
 setInterval(() => {
