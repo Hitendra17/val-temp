@@ -43,25 +43,21 @@
   </div>
 
   <a href="index.html" class="home-btn">Home</a>
-
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const noBtn = document.getElementById("noBtn");
   const yesBtn = document.getElementById("yesBtn");
-  const arena = document.getElementById("arena");
-  const catZone = document.querySelector(".val-cat-zone");
+  const container = document.querySelector(".val-card");
   const overlay = document.getElementById("imgOverlay");
   const closeBtn = document.getElementById("closeImg");
 
   let activated = false;
   let lastTouch = 0;
 
-  // Ensure arena is positioning context (safety)
-  arena.style.position = "relative";
-  arena.style.overflow = "visible";
-
-  // Improve mobile touch handling
+  // Touch behavior safety
   noBtn.style.touchAction = "none";
+  container.style.position = "relative";
+  container.style.overflow = "visible";
 
   function overlap(a, b) {
     return !(
@@ -72,59 +68,55 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-function moveNo() {
-  if (!activated) {
-    activated = true;
+  function moveNo() {
+    if (!activated) {
+      activated = true;
 
-    // Lock both buttons into arena space
-    const arenaRect = arena.getBoundingClientRect();
-    const noRect = noBtn.getBoundingClientRect();
-    const yesRect = yesBtn.getBoundingClientRect();
+      const cRect = container.getBoundingClientRect();
+      const nRect = noBtn.getBoundingClientRect();
+      const yRect = yesBtn.getBoundingClientRect();
 
-    noBtn.style.position = "absolute";
-    yesBtn.style.position = "absolute";
+      // Lock both buttons into card space
+      noBtn.style.position = "absolute";
+      yesBtn.style.position = "absolute";
 
-    noBtn.style.left = (noRect.left - arenaRect.left) + "px";
-    noBtn.style.top  = (noRect.top  - arenaRect.top)  + "px";
+      noBtn.style.left = (nRect.left - cRect.left) + "px";
+      noBtn.style.top  = (nRect.top  - cRect.top)  + "px";
 
-    yesBtn.style.left = (yesRect.left - arenaRect.left) + "px";
-    yesBtn.style.top  = (yesRect.top  - arenaRect.top)  + "px";
+      yesBtn.style.left = (yRect.left - cRect.left) + "px";
+      yesBtn.style.top  = (yRect.top  - cRect.top)  + "px";
+    }
+
+    const padding = 20;
+    const cRect = container.getBoundingClientRect();
+    const yRect = yesBtn.getBoundingClientRect();
+
+    const maxX = cRect.width - noBtn.offsetWidth - padding;
+    const maxY = cRect.height - noBtn.offsetHeight - padding;
+
+    let x, y, testRect;
+    let tries = 0;
+
+    do {
+      x = Math.random() * Math.max(0, maxX);
+      y = Math.random() * Math.max(0, maxY);
+
+      testRect = {
+        left: cRect.left + x,
+        right: cRect.left + x + noBtn.offsetWidth,
+        top: cRect.top + y,
+        bottom: cRect.top + y + noBtn.offsetHeight
+      };
+
+      tries++;
+      if (tries > 100) break;
+
+    } while (overlap(testRect, yRect));
+
+    noBtn.style.transform = "none";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
   }
-
-  const padding = 10;
-
-  const arenaRect = arena.getBoundingClientRect();
-  const yesRect = yesBtn.getBoundingClientRect();
-  const catRect = catZone.getBoundingClientRect();
-
-  const maxX = arena.clientWidth - noBtn.offsetWidth - padding;
-  const maxY = arena.clientHeight - noBtn.offsetHeight - padding;
-
-  let x, y, testRect;
-  let tries = 0;
-
-  do {
-    x = Math.random() * Math.max(0, maxX);
-    y = Math.random() * Math.max(0, maxY);
-
-    testRect = {
-      left: arenaRect.left + x,
-      right: arenaRect.left + x + noBtn.offsetWidth,
-      top: arenaRect.top + y,
-      bottom: arenaRect.top + y + noBtn.offsetHeight
-    };
-
-    tries++;
-    if (tries > 80) break;
-
-  } while (
-    overlap(testRect, yesRect) ||
-    overlap(testRect, catRect)
-  );
-
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
-}
 
   function handleNo(e) {
     e.preventDefault();
@@ -137,7 +129,7 @@ function moveNo() {
     handleNo(e);
   }, { passive: false });
 
-  // Fallback: mouse / trackpad
+  // Mouse fallback
   noBtn.addEventListener("mouseenter", (e) => {
     if (Date.now() - lastTouch < 500) return;
     handleNo(e);
@@ -159,6 +151,5 @@ function moveNo() {
   });
 });
 </script>
-
 </body>
 </html>
