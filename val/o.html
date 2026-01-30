@@ -54,10 +54,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let activated = false;
   let lastTouch = 0;
 
-  // Touch behavior safety
-  noBtn.style.touchAction = "none";
+  // Make card the positioning context
   container.style.position = "relative";
   container.style.overflow = "visible";
+
+  // Mobile safety
+  noBtn.style.touchAction = "none";
 
   function overlap(a, b) {
     return !(
@@ -69,28 +71,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function moveNo() {
-    if (!activated) {
-      activated = true;
-
-      const cRect = container.getBoundingClientRect();
-      const nRect = noBtn.getBoundingClientRect();
-      const yRect = yesBtn.getBoundingClientRect();
-
-      // Lock both buttons into card space
-      noBtn.style.position = "absolute";
-      yesBtn.style.position = "absolute";
-
-      noBtn.style.left = (nRect.left - cRect.left) + "px";
-      noBtn.style.top  = (nRect.top  - cRect.top)  + "px";
-
-      yesBtn.style.left = (yRect.left - cRect.left) + "px";
-      yesBtn.style.top  = (yRect.top  - cRect.top)  + "px";
-    }
-
-    const padding = 20;
     const cRect = container.getBoundingClientRect();
     const yRect = yesBtn.getBoundingClientRect();
 
+    if (!activated) {
+      activated = true;
+
+      const nRect = noBtn.getBoundingClientRect();
+
+      noBtn.style.position = "absolute";
+      noBtn.style.left = (nRect.left - cRect.left) + "px";
+      noBtn.style.top  = (nRect.top  - cRect.top)  + "px";
+    }
+
+    const padding = 20;
     const maxX = cRect.width - noBtn.offsetWidth - padding;
     const maxY = cRect.height - noBtn.offsetHeight - padding;
 
