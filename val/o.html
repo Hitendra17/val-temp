@@ -72,49 +72,59 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  function moveNo() {
-    if (!activated) {
-      activated = true;
-      noBtn.style.position = "absolute";
-      noBtn.style.left = "0px";
-      noBtn.style.top = "0px";
-    }
+function moveNo() {
+  if (!activated) {
+    activated = true;
 
-    const padding = 10;
-
+    // Lock both buttons into arena space
     const arenaRect = arena.getBoundingClientRect();
+    const noRect = noBtn.getBoundingClientRect();
     const yesRect = yesBtn.getBoundingClientRect();
-    const catRect = catZone.getBoundingClientRect();
 
-    const maxX = arena.clientWidth - noBtn.offsetWidth - padding;
-    const maxY = arena.clientHeight - noBtn.offsetHeight - padding;
+    noBtn.style.position = "absolute";
+    yesBtn.style.position = "absolute";
 
-    let x, y, testRect;
-    let tries = 0;
+    noBtn.style.left = (noRect.left - arenaRect.left) + "px";
+    noBtn.style.top  = (noRect.top  - arenaRect.top)  + "px";
 
-    do {
-      x = Math.random() * Math.max(0, maxX);
-      y = Math.random() * Math.max(0, maxY);
-
-      testRect = {
-        left: arenaRect.left + x,
-        right: arenaRect.left + x + noBtn.offsetWidth,
-        top: arenaRect.top + y,
-        bottom: arenaRect.top + y + noBtn.offsetHeight
-      };
-
-      tries++;
-      if (tries > 50) break;
-
-    } while (
-      overlap(testRect, yesRect) ||
-      overlap(testRect, catRect)
-    );
-
-    noBtn.style.transform = "none";
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+    yesBtn.style.left = (yesRect.left - arenaRect.left) + "px";
+    yesBtn.style.top  = (yesRect.top  - arenaRect.top)  + "px";
   }
+
+  const padding = 10;
+
+  const arenaRect = arena.getBoundingClientRect();
+  const yesRect = yesBtn.getBoundingClientRect();
+  const catRect = catZone.getBoundingClientRect();
+
+  const maxX = arena.clientWidth - noBtn.offsetWidth - padding;
+  const maxY = arena.clientHeight - noBtn.offsetHeight - padding;
+
+  let x, y, testRect;
+  let tries = 0;
+
+  do {
+    x = Math.random() * Math.max(0, maxX);
+    y = Math.random() * Math.max(0, maxY);
+
+    testRect = {
+      left: arenaRect.left + x,
+      right: arenaRect.left + x + noBtn.offsetWidth,
+      top: arenaRect.top + y,
+      bottom: arenaRect.top + y + noBtn.offsetHeight
+    };
+
+    tries++;
+    if (tries > 80) break;
+
+  } while (
+    overlap(testRect, yesRect) ||
+    overlap(testRect, catRect)
+  );
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
 
   function handleNo(e) {
     e.preventDefault();
