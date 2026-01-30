@@ -272,7 +272,9 @@ html, body {
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+  overflow: visible;
 }
+
 
 .val-cat-zone {
   width: 180px;
