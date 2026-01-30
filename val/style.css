@@ -1,3 +1,6 @@
+/* ===============================
+   GLOBAL RESET
+================================ */
 * {
   box-sizing: border-box;
 }
@@ -7,13 +10,17 @@
   --thought-color: rgba(255, 90, 130, 0.9);
 }
 
-body {
+html, body {
   margin: 0;
-  min-height: 100vh;
+  min-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
   font-family: "Segoe UI", system-ui, sans-serif;
 }
 
-/* ---------------- INTRO PAGE ---------------- */
+/* ===============================
+   INTRO PAGE
+================================ */
 .intro {
   position: relative;
   background: linear-gradient(135deg, #ffe4ec, #ffffff);
@@ -21,6 +28,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
 }
 
 .card {
@@ -102,7 +110,9 @@ body {
   to { transform: translateY(-50%) translateX(40px); }
 }
 
-/* ---------------- POPUP PAGE ---------------- */
+/* ===============================
+   POPUP PAGE
+================================ */
 .popup-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #ffd6e8, #fefefe);
@@ -154,17 +164,20 @@ body {
   margin-bottom: 1.5rem;
 }
 
-/* ---------------- NO PAGE ---------------- */
+/* ===============================
+   NO PAGE (SCROLLABLE, STABLE)
+================================ */
 .no-page {
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
   background: linear-gradient(135deg, #fff0f5, #ffffff);
 }
+
 #typeText {
   white-space: pre-line;
 }
+
 .no-layout {
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -215,7 +228,9 @@ body {
   to { transform: translateY(-15px); }
 }
 
-/* ---------------- VALENTINE PAGE ---------------- */
+/* ===============================
+   VALENTINE PAGE
+================================ */
 .val-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #ffe4ec, #ffffff);
@@ -274,7 +289,9 @@ body {
   max-width: 140px;
 }
 
-/* ---------------- GLOBAL EFFECTS ---------------- */
+/* ===============================
+   GLOBAL EFFECTS
+================================ */
 .glitter {
   position: fixed;
   inset: 0;
@@ -392,68 +409,30 @@ body {
   filter: grayscale(1);
 }
 
-/* ---------------- MOBILE FIX ---------------- */
+/* ===============================
+   MOBILE RESPONSIVE
+================================ */
 @media (max-width: 768px) {
 
-  .no-layout {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1.5rem;
-    gap: 2rem;
-    height: 100%;
-  }
-
-  .note-panel {
-    max-width: 100%;
-    width: 100%;
-    padding: 1.5rem;
-  }
-
-  .photo-panel img {
-    width: 90vw;
-    height: auto;
-    max-height: 50vh;
-  }
-
-  .float-text {
-    max-width: 90vw;
-    font-size: 0.9rem;
+  body {
+    font-size: 15px;
   }
 
   .card,
   .popup-card,
   .val-card {
-    width: 90vw;
-    padding: 2rem;
+    width: 95%;
+    padding: 2rem 1.5rem;
+    margin: 1rem;
   }
 
   .title {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 
-  .popup-title,
-  .val-title {
-    font-size: 1.8rem;
-  }
-
-  .runner {
+  .image-wrap img {
     width: 160px;
-    opacity: 0.6;
-  }
-
-  #arena {
-    width: 90vw;
-    height: 240px;
-  }
-
-  .val-layout {
-    flex-direction: column;
-  }
-
-  .val-cat-zone {
-    width: 140px;
-    height: 140px;
+    height: 160px;
   }
 
   .buttons {
@@ -461,4 +440,85 @@ body {
     gap: 1rem;
   }
 
+  .btn {
+    width: 100%;
+  }
+
+  .intro {
+    flex-direction: column;
+    padding: 80px 0;
+  }
+
+  .runner {
+    position: static;
+    width: 130px;
+    transform: none;
+    animation: none;
+    margin: 10px auto;
+  }
+
+  .cat { order: -1; }
+  .dog { order: 1; }
+
+  .no-layout {
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .note-panel {
+    max-width: 100%;
+  }
+
+  .photo-panel img {
+    width: 90vw;
+    height: auto;
+    max-height: 65vh;
+  }
+
+  .float-text {
+    max-width: 90%;
+  }
+
+  .val-layout {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  #arena {
+    width: 100%;
+    height: auto;
+  }
+
+  .val-cat-zone {
+    width: 140px;
+    height: 140px;
+  }
+
+  .val-cat-zone img {
+    max-width: 110px;
+  }
+
+  .img-card {
+    padding: 1rem;
+    max-width: 95vw;
+    max-height: 90vh;
+  }
+
+  .img-card img {
+    max-width: 90vw;
+    max-height: 65vh;
+  }
+
+  .hearts {
+    font-size: 1rem;
+    letter-spacing: 0.6rem;
+  }
+
+  .home-btn {
+    bottom: 12px;
+    right: 12px;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
 }
