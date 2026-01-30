@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let activated = false;
   let lastTouch = 0;
 
-  // Make card the positioning context
+  // Make card a stable positioning context
   container.style.position = "relative";
   container.style.overflow = "visible";
 
@@ -70,21 +70,31 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  function moveNo() {
-    const cRect = container.getBoundingClientRect();
-    const yRect = yesBtn.getBoundingClientRect();
+  function freezeHeight() {
+    const h = container.offsetHeight;
+    container.style.height = h + "px";
+  }
 
+  function moveNo() {
     if (!activated) {
       activated = true;
 
+      // Lock card height so layout doesn't collapse
+      freezeHeight();
+
+      const cRect = container.getBoundingClientRect();
       const nRect = noBtn.getBoundingClientRect();
 
+      // Only NO becomes absolute
       noBtn.style.position = "absolute";
       noBtn.style.left = (nRect.left - cRect.left) + "px";
       noBtn.style.top  = (nRect.top  - cRect.top)  + "px";
     }
 
+    const cRect = container.getBoundingClientRect();
+    const yRect = yesBtn.getBoundingClientRect();
     const padding = 20;
+
     const maxX = cRect.width - noBtn.offsetWidth - padding;
     const maxY = cRect.height - noBtn.offsetHeight - padding;
 
@@ -107,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     } while (overlap(testRect, yRect));
 
-    noBtn.style.transform = "none";
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
   }
